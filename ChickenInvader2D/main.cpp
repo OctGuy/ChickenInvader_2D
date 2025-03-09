@@ -44,21 +44,29 @@ CSpaceShip* spaceship;
 #define SPACESHIP_START_VY 0.1f
 
 
-CBullet* bullet;
+//* bullet;
 #define BULLET_X 10.0f
 #define BULLET_Y 120.0f
 #define BULLET_VX 0.0f
 #define BULLET_VY 0.0f
 
-CMonster* monster;
+CMonster* monster1;
+CMonster* monster2;
+CMonster* monster3;
 #define MONSTER_X 0.0f
 #define MONSTER_Y 0.0f
 #define MONSTER_VX 0.0f
 #define MONSTER_VY 0.0f
 
+#define MONSTER_SPACE 20
+
+
 LPTEXTURE texSpaceShip = NULL;
 LPTEXTURE texBullet = NULL;
 LPTEXTURE texMonster = NULL;
+
+vector<CMonster*> monsters;
+vector<LPGAMEOBJECT> objects;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -76,46 +84,66 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 /*
 	Load all game resources. In this example, create a spaceship object and chickens object
 */
+
+//void RespawnMonster() {
+//	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
+//	float newX = rand() % BackBufferWidth;
+//	float newY = MONSTER_SPACE;
+//	CMonster* newMonster = new CMonster(newX, newY, 0, 0, texMonster);
+//	monsters.push_back(newMonster);
+//	objects.push_back(newMonster);
+//}
+
 void LoadResources()
 {
 	CGame* game = CGame::GetInstance();
 	texBullet = game->LoadTexture(TEXTURE_PATH_BULLET);
 	texSpaceShip = game->LoadTexture(TEXTURE_PATH_SPACESHIP);
 	texMonster = game->LoadTexture(TEXTURE_PATH_MONSTER);
-	// Load a sprite sheet as a texture to try drawing a portion of a texture. See function Render 
-	//texMisc = game->LoadTexture(MISC_TEXTURE_PATH);
 
 	spaceship = new CSpaceShip(SPACESHIP_START_X, SPACESHIP_START_Y, SPACESHIP_START_VX, SPACESHIP_START_VY, texSpaceShip,
 		BULLET_X, BULLET_Y, BULLET_VX, BULLET_VY, texBullet);
-	bullet = new CBullet(BULLET_X, BULLET_Y, BULLET_VX, BULLET_VY, texBullet);
-	monster = new CMonster(MONSTER_X, MONSTER_Y, MONSTER_VX, MONSTER_VY, texMonster);
-
-
-	/*objects.push_back(brick);
-	for (int i = 0; i < 20; i++) {
-		objects.push_back(new CBrick(BRICK_X + i * 16, BRICK_Y, texBrick));
-	}*/
-
-	//
-	// int x = BRICK_X;
-	// for(i)
-	//		... new CGameObject(x,.... 
-	//		x+=BRICK_WIDTH;
+	//bullet = new CBullet(BULLET_X, BULLET_Y, BULLET_VX, BULLET_VY, texBullet);
+	monster1 = new CMonster(MONSTER_X, MONSTER_Y, MONSTER_VX, MONSTER_VY, texMonster);
+	monster2 = new CMonster(MONSTER_X, MONSTER_Y, MONSTER_VX, MONSTER_VY, texMonster);
+	monster3 = new CMonster(MONSTER_X, MONSTER_Y, MONSTER_VX, MONSTER_VY, texMonster);
+	objects.push_back(spaceship);
+	objects.push_back(monster1);
+	objects.push_back(monster2);
+	objects.push_back(monster3);
+	monsters.push_back(monster1);
+	monsters.push_back(monster2);
+	monsters.push_back(monster3);
+	game->AddSpaceShip(spaceship);
+	game->AddMonster(monsters);
 }
 
 /*
 	Update world status for this frame
 	dt: time period between beginning of last frame and beginning of this frame
 */
+
 void Update(DWORD dt)
 {
 
 	/*for (int i=0;i<20;i++)
 		objects[i]->Update(dt);*/
 
-	spaceship->Update(dt);
+	/*spaceship->Update(dt);
 	bullet->Update(dt);
-	monster->Update(dt);
+	monster->Update(dt);*/
+
+	for (LPGAMEOBJECT obj : objects)
+		obj->Update(dt);
+
+	/*for (size_t i = 0; i < monsters.size(); i++) {
+		if (!monsters[i]->GetIsAlive()) {
+			objects.erase(remove(objects.begin(), objects.end(), monsters[i]), objects.end());
+			delete monsters[i];
+			monsters.erase(monsters.begin() + i);
+			RespawnMonster();
+		}
+	}*/
 
 	//DebugOutTitle(L"01 - Skeleton %0.1f, %0.1f", mario->GetX(), mario->GetY());
 }
@@ -148,7 +176,7 @@ void Render()
 		/*for (int i = 0; i < 20; i++) {
 			objects[i]->Render();
 		}*/
-		if (bullet->GetIsActive())
+		/*if (bullet->GetIsActive())
 		{
 			bullet->Render();
 		}
@@ -156,7 +184,10 @@ void Render()
 		{
 			monster->Render();
 		}
-		spaceship->Render();
+		spaceship->Render();*/
+
+		for (LPGAMEOBJECT obj : objects)
+			obj->Render();
 
 		// Uncomment this line to see how to draw a porttion of a texture  
 		//g->Draw(10, 10, texMisc, 300, 117, 317, 134);

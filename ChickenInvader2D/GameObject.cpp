@@ -9,7 +9,7 @@
 /*
 	Initialize game object
 */
-extern CSpaceShip* spaceship;
+//extern CSpaceShip* spaceship;
 
 CGameObject::CGameObject(float x, float y, LPTEXTURE tex)
 {
@@ -107,8 +107,7 @@ void CSpaceShip::Update(DWORD dt)
 	bullet->Update(dt);
 }
 
-void CSpaceShip::HandleShooting(DWORD dt)
-{
+void CSpaceShip::HandleShooting(DWORD dt) {
 	if (!bullet->GetIsActive()) {
 		bullet->SetPosition(x, y);
 		bullet->SetVelocity(0, -BULLET_SPEED);
@@ -116,17 +115,12 @@ void CSpaceShip::HandleShooting(DWORD dt)
 	}
 }
 
-void CSpaceShip::Render()
-{
+void CSpaceShip::Render() {
 	CGame::GetInstance()->Draw(x, y, texture);
 	bullet->Render();
 }
 
-void CMonster::Render()
-{
-	/*int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-	x = rand() % BackBufferWidth;*/
-	
+void CMonster::Render() {
 	if (isAlive) CGame::GetInstance()->Draw(x, y, texture);
 }
 
@@ -145,12 +139,12 @@ void CMonster::Update(DWORD dt)
 	// Ensure vx is not reset every frame
 	if (vx == 0) {
 		vx = MONSTER_SPEED;  // Initialize movement direction once
+		vy = 0;
 	}
 
-	y = MONSTER_SPACE;
-	// Update position
-	//x = rand() % BackBufferWidth;
-	x += vx * dt;
+	y = MONSTER_SPACE;		// Set y coord that allow monster moving around that space.
+	
+	x += vx * dt;			// update horizontal direction with velocity
 
 	// Reverse direction when hitting screen edges
 	if (x <= 0 || x >= BackBufferWidth) {
@@ -165,6 +159,7 @@ void CMonster::Update(DWORD dt)
 		}
 	}
 
+	CSpaceShip* spaceship = CGame::GetInstance()->GetSpaceShip();
 	CheckCollision(spaceship->GetBullet());
 	Revive(); // once the chicken is hit by a bullet, it is revived at random coord on the screen
 }

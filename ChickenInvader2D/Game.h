@@ -2,10 +2,14 @@
 #include <Windows.h>
 #include <d3d10.h>
 #include <d3dx10.h>
+#include <vector>
 
 #include "Texture.h"
+#include "GameObject.h"
 
 #define MAX_FRAME_RATE 60
+
+using namespace std;
 
 /*
 	Our simple game framework
@@ -24,6 +28,10 @@ class CGame
 	ID3D10BlendState* pBlendStateAlpha = NULL;			// To store alpha blending state
 
 	ID3DX10Sprite* spriteObject = NULL;				// Sprite handling object 
+
+	CSpaceShip* spaceship;
+
+	vector<CMonster*> monsters;
 
 public:
 	// Init DirectX, Sprite Handler
@@ -55,6 +63,13 @@ public:
 
 	int GetBackBufferWidth() { return backBufferWidth; }
 	int GetBackBufferHeight() { return backBufferHeight; }
+	CSpaceShip* GetSpaceShip() { return spaceship; }
+	vector<CMonster*> GetMonsters() { return monsters; }
+	void AddSpaceShip(CSpaceShip* ss) { this->spaceship = ss; }
+	void AddMonster(vector<CMonster*> mons) {
+		for (CMonster* m : mons)
+			this->monsters.push_back(m);
+	}
 
 	static CGame* GetInstance();
 
