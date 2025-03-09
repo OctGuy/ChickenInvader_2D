@@ -30,7 +30,7 @@
 #define TEXTURE_PATH_SPACESHIP L"img/spaceship.png"
 #define TEXTURE_PATH_MONSTER L"img/chicken.png"
 
-#define BACKGROUND_COLOR D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.0f)
+#define BACKGROUND_COLOR D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f)
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
 
@@ -58,10 +58,7 @@ CMonster* monster;
 
 LPTEXTURE texSpaceShip = NULL;
 LPTEXTURE texBullet = NULL;
-//LPTEXTURE texMisc = NULL;
 LPTEXTURE texMonster = NULL;
-
-//vector<CMonster*> monsters; 
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -77,7 +74,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 /*
-	Load all game resources. In this example, create a brick object and mario object
+	Load all game resources. In this example, create a spaceship object and chickens object
 */
 void LoadResources()
 {
@@ -85,8 +82,6 @@ void LoadResources()
 	texBullet = game->LoadTexture(TEXTURE_PATH_BULLET);
 	texSpaceShip = game->LoadTexture(TEXTURE_PATH_SPACESHIP);
 	texMonster = game->LoadTexture(TEXTURE_PATH_MONSTER);
-	//texMisc = game->LoadTexture(TEXTURE_PATH_MISC);
-
 	// Load a sprite sheet as a texture to try drawing a portion of a texture. See function Render 
 	//texMisc = game->LoadTexture(MISC_TEXTURE_PATH);
 

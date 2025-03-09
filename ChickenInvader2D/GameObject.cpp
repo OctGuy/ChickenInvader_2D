@@ -124,7 +124,18 @@ void CSpaceShip::Render()
 
 void CMonster::Render()
 {
+	/*int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
+	x = rand() % BackBufferWidth;*/
+	
 	if (isAlive) CGame::GetInstance()->Draw(x, y, texture);
+}
+
+void CMonster::Revive() {
+	if (!isAlive) {
+		isAlive = true;
+		int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
+		x = rand() % BackBufferWidth;
+	}
 }
 
 void CMonster::Update(DWORD dt)
@@ -155,7 +166,7 @@ void CMonster::Update(DWORD dt)
 	}
 
 	CheckCollision(spaceship->GetBullet());
-	isAlive = true;
+	Revive(); // once the chicken is hit by a bullet, it is revived at random coord on the screen
 }
 
 void CMonster::CheckCollision(CBullet* bullet)

@@ -90,4 +90,5 @@ public:
 	bool GetIsAlive() { return isAlive; }
 	void CheckCollision(CBullet*);
 	void Update(DWORD dt);
+	void Revive();
 };
