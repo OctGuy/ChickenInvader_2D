@@ -1,4 +1,4 @@
-# 🐔 Chicken Shooter (D3DX) 🎯
+# 🐔 Chicken Invader (D3DX) 🎯
 
 ## 📜 Description
 A simple 2D shooting game built using **D3DX** where the player controls a shooter that fires bullets at chickens. The game implements basic **collision detection** to check when a bullet hits a chicken.
