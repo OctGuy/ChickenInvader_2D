@@ -24,10 +24,10 @@
     <Image Include="img\chicken.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="img\logo.ico">
+    <Image Include="img\spaceship.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="img\spaceship.png">
+    <Image Include="img\logo.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

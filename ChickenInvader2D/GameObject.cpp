@@ -9,7 +9,6 @@
 /*
 	Initialize game object
 */
-//extern CSpaceShip* spaceship;
 
 CGameObject::CGameObject(float x, float y, LPTEXTURE tex)
 {

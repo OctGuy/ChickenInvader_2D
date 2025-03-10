@@ -43,8 +43,6 @@ CSpaceShip* spaceship;
 #define SPACESHIP_START_VX 0.1f
 #define SPACESHIP_START_VY 0.1f
 
-
-//* bullet;
 #define BULLET_X 10.0f
 #define BULLET_Y 120.0f
 #define BULLET_VX 0.0f
@@ -85,15 +83,6 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	Load all game resources. In this example, create a spaceship object and chickens object
 */
 
-//void RespawnMonster() {
-//	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-//	float newX = rand() % BackBufferWidth;
-//	float newY = MONSTER_SPACE;
-//	CMonster* newMonster = new CMonster(newX, newY, 0, 0, texMonster);
-//	monsters.push_back(newMonster);
-//	objects.push_back(newMonster);
-//}
-
 void LoadResources()
 {
 	CGame* game = CGame::GetInstance();
@@ -125,25 +114,8 @@ void LoadResources()
 
 void Update(DWORD dt)
 {
-
-	/*for (int i=0;i<20;i++)
-		objects[i]->Update(dt);*/
-
-	/*spaceship->Update(dt);
-	bullet->Update(dt);
-	monster->Update(dt);*/
-
 	for (LPGAMEOBJECT obj : objects)
 		obj->Update(dt);
-
-	/*for (size_t i = 0; i < monsters.size(); i++) {
-		if (!monsters[i]->GetIsAlive()) {
-			objects.erase(remove(objects.begin(), objects.end(), monsters[i]), objects.end());
-			delete monsters[i];
-			monsters.erase(monsters.begin() + i);
-			RespawnMonster();
-		}
-	}*/
 
 	//DebugOutTitle(L"01 - Skeleton %0.1f, %0.1f", mario->GetX(), mario->GetY());
 }
@@ -170,21 +142,6 @@ void Render()
 		// Use Alpha blending for transparent sprites
 		FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 		pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
-
-
-		//brick->Render();
-		/*for (int i = 0; i < 20; i++) {
-			objects[i]->Render();
-		}*/
-		/*if (bullet->GetIsActive())
-		{
-			bullet->Render();
-		}
-		if (monster->GetIsAlive())
-		{
-			monster->Render();
-		}
-		spaceship->Render();*/
 
 		for (LPGAMEOBJECT obj : objects)
 			obj->Render();
